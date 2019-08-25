@@ -12,6 +12,11 @@ params:
   subtitle: "Coding..."
   keywords: ""
   description: ""
+  utteranc:
+    enable: true
+    repo: "XDean/blog-comment"
+    issueTerm: "url"
+    theme: "github-light"
 menu:
   main:
     - identifier: "archives"
@@ -22,6 +27,5 @@ menu:
       name: "关于"
       url: "/about/"
       weight: 3
-
 preserveTaxonomyNames: true
 disablePathToLower: true
