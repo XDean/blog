@@ -1,0 +1,11 @@
+/public/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+output/
+*.exe
+/runtime-data/
