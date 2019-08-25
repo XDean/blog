@@ -1,5 +1,5 @@
 ---
-title: "Database Normalize"
+title: "数据库正则化"
 date: 2019-06-27
 source: "https://github.com/XDean/Share/blob/master/doc/database/database-normalize.md"
 tags: 
@@ -269,7 +269,7 @@ For every one of its non-trivial multivalued dependencies $X \twoheadrightarrow 
 
 Every non-trivial join dependency in that table is implied by the candidate keys.
 
-任意非平凡连接依赖 $\left\{A_1, A_2, A_3 ... A_n\right\}$, $A_i$是超键
+任意非平凡连接依赖 {$A_1, A_2, A_3 ... A_n$}, $A_i$是超键
 
 ## Sample
 

@@ -54,4 +54,4 @@ void cancel();
 
 | Previous | Next |
 | --- | --- |
-|   | [Operator](2-Operator.html) |
+|   | [Operator](../2-Operator) |

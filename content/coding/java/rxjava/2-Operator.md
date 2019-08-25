@@ -124,4 +124,4 @@ Flowable.range(1, 10)
 
 | Previous | Next |
 | --- | --- |
-|[Reactive API](1-Reactive-API.html)   | [Scheduler](3-Scheduler.html) |
+|[Reactive API](../1-Reactive-API)   | [Scheduler](../3-Scheduler) |

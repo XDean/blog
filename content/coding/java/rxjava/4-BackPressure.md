@@ -47,3 +47,8 @@ categories:
 - `onBackPressureBuffer`，原理和上面的`observeOn`的buffer一样，在上例中我们只要把货架扩容，问题就暂时解决了。
 - `onBackPressureDrop`，把放不下的鸡直接扔掉
 - `onBackPressureLatest`，把最早的鸡扔掉
+
+
+| Previous | Next |
+| --- | --- |
+| [Scheduler](../3-Scheduler) |  |

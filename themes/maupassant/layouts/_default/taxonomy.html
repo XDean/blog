@@ -41,10 +41,12 @@
                                 {{ end }}
                             </div>
                             {{ end }}
+                            {{with .Params.EnableSummary}}
                             <div class="post-content">
                                 {{ .Summary }}……
                                 <p class="readmore"><a href="{{ .Permalink }}">阅读全文</a></p>
                             </div>
+                            {{ end }}
                         </article>
                     {{ end }}
 

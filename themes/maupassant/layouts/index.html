@@ -27,10 +27,12 @@
                                 {{ end }}
                             </div>
                             {{ end }}
+                            {{with .Params.EnableSummary}}
                             <div class="post-content">
                                 {{ .Summary }}……
                             </div>
                             <p class="readmore"><a href="{{ .Permalink }}">阅读全文</a></p>
+                            {{end}}
                         </article>
                     {{ end }}
                     {{ partial "paginator" . }}

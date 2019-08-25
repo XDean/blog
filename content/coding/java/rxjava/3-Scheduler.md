@@ -35,4 +35,4 @@ RxJava 为我们提供了两个调度操作符`subscribeOn`和`observeOn`.
 
 | Previous | Next |
 | --- | --- |
-| [Operator](2-Operator.html) |  [BackPressure](4-BackPressure.html)|
+| [Operator](../2-Operator) |  [BackPressure](../4-BackPressure)|
