@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	cmd := exec.Command("hugo", "server", "--theme=hyde", "--buildDrafts")
+	cmd := exec.Command("hugo", "server", "")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()

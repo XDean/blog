@@ -1,6 +1,27 @@
 baseURL: "http://example.org/"
-languageCode: "en-us"
-title: "My New Hugo Site"
+theme: "maupassant"
+languageCode: "zh-CN"
+title: "XDean的博客"
 taxonomies:
   tag: "tags"
   category: "categories"
+author:
+  name: "XDean"
+params:
+  author: "XDean"
+  subtitle: "Coding..."
+  keywords: ""
+  description: ""
+menu:
+  main:
+    - identifier: "archives"
+      name: "归档"
+      url: "/archives/"
+      weight: 2
+    - identifier: "about"
+      name: "关于"
+      url: "/about/"
+      weight: 3
+
+preserveTaxonomyNames: true
+disablePathToLower: true
