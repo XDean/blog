@@ -23,5 +23,6 @@ menu:
       url: "/about/"
       weight: 3
 
+uglyUrls: true
 preserveTaxonomyNames: true
 disablePathToLower: true
