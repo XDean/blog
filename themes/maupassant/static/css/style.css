@@ -293,7 +293,7 @@ textarea {
 }
 .post-meta {
     padding:0;
-    margin:9px 0 0;
+    margin:4px 0 0;
     color:#999;
     text-align:left;
     display: inline-block;
@@ -319,7 +319,7 @@ textarea {
     padding: .3em 0;
 }
 .meta-tags ul a {
-    margin-left: 24px;
+    margin-right: 12px;
     padding: 0 10px 0 14px;
     background: #0089e0;
     color: #fff;

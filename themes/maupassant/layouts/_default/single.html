@@ -3,7 +3,7 @@
 {{ partial "header" . }}
 
 <div id="body">
-        {{ if .Params.toc -}}
+    {{ if .Params.toc -}}
         <!--悬浮目录-->
         <div id="virtual_toc_list" style="display: none">
             {{.TableOfContents}}
@@ -14,7 +14,7 @@
                 <strong id="toc_btn_close" style="color: black;font-size: large;float: right">╳</strong>
             </header>
             <div id="toc_list" style="background-color: #f3f3f3;color: black;padding: 10px;">
-        
+
             </div>
         </div>
         <style type="text/css">
@@ -25,7 +25,7 @@
                 height: auto;
                 font-size: 13px;
             }
-        
+
             #toc_list a:hover,
             #toc_list a:active {
                 color: #ba3925;
@@ -104,10 +104,10 @@
                     fixedTocElem.parentElement.style.display = "";
                 }
                 document.getElementById("virtual_toc_list").remove();
-            };   
+            };
         </script>
-        {{- end }}
-        
+    {{- end }}
+
     <div class="container">
         <div class="col-group">
 
@@ -115,30 +115,43 @@
                 <div class="res-cons">
                     <article class="post">
                         <header>
-                            <h1 class="post-title">{{ .Title }}</h1>
+                            <h1 class="post-title">{{ .Title }}&nbsp&nbsp
+                                <date class="post-meta meta-date">
+                                    {{ .Date.Year }}年{{ printf "%d" .Date.Month }}月{{ .Date.Day }}日
+                                </date>
+                            </h1>
                         </header>
-                        <date class="post-meta meta-date">
-                            {{ .Date.Year }}年{{ printf "%d" .Date.Month }}月{{ .Date.Day }}日
-                        </date>
                         {{ with .Params.Categories }}
-                        <div class="post-meta">
-                            <span>|</span>
-                            {{ range . }}
-                                <span class="meta-category"><a href="{{ "/categories/" | absLangURL }}{{ . | urlize }}">{{ . }}</a></span>
+                            <div class="post-meta meta-tags">
+                                <ul class="clearfix">
+                                    {{ range . }}
+                                        <li><a href="{{ "/categories/" | absLangURL }}{{ . | urlize }}">{{ . }}</a></li>
+                                    {{ end }}
+                                </ul>
+                            </div>
+                        {{ end }}
+                        <div class="post-meta meta-tags">
+                            {{ if and (isset .Params "tags") .Params.tags }}
+                                <ul class="clearfix">
+                                    {{ range .Params.Tags }}
+                                        <li><a href="{{ "/tags/" | absLangURL }}{{ . | urlize }}">{{ . }}</a></li>
+                                    {{ end }}
+                                </ul>
+                            {{ else }}
+                                没有标签
                             {{ end }}
                         </div>
-                        {{ end }}
                         {{ if .Site.Params.busuanzi }}
-                        <div class="post-meta">
-                            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
-                        </div>
+                            <div class="post-meta">
+                                <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span> 阅读</span></span>
+                            </div>
                         {{ end }}
                         {{ if .Params.toc }}
-                        <div class="clear" style="display: none">
-                            <div class="toc-article">
-                                <div class="toc-title">文章目录</div>
+                            <div class="clear" style="display: none">
+                                <div class="toc-article">
+                                    <div class="toc-title">文章目录</div>
+                                </div>
                             </div>
-                        </div>
                         {{ end }}
                         <div class="post-content">
                             {{ .Content }}
@@ -147,18 +160,6 @@
                         {{ partial "copyright" .}}
 
                         {{ partial "related" . }}
-
-                        <div class="post-meta meta-tags">
-                            {{ if and (isset .Params "tags") .Params.tags }}
-                            <ul class="clearfix">
-                                {{ range .Params.Tags }}
-                                <li><a href="{{ "/tags/" | absLangURL }}{{ . | urlize }}">{{ . }}</a></li>
-                                {{ end }}
-                            </ul>
-                            {{ else }}
-                            没有标签
-                            {{ end }}
-                        </div>
                     </article>
                     {{ partial "comments" . }}
                 </div>
