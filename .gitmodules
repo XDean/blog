@@ -1,6 +1,0 @@
-[submodule "themes/hyde"]
-	path = themes/hyde
-	url = https://github.com/spf13/hyde.git
-[submodule "themes/maupassant"]
-	path = themes/maupassant
-	url = https://github.com/rujews/maupassant-hugo
