@@ -1,6 +1,7 @@
 ---
 title: "Database Normalize"
 date: 2019-06-27
+source: "https://github.com/XDean/Share/blob/master/doc/database/database-normalize.md"
 tags: 
   - "Knowledge-Sharing"
 categories:
