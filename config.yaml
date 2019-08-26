@@ -1,4 +1,4 @@
-baseURL: "http://example.org/"
+baseURL: "http://blog.xdean.cn/"
 theme: "maupassant"
 languageCode: "zh-CN"
 title: "XDean的博客"
@@ -9,7 +9,7 @@ author:
   name: "XDean"
 params:
   author: "XDean"
-  subtitle: "Coding..."
+  subtitle: ""
   keywords: ""
   description: ""
   utteranc:
