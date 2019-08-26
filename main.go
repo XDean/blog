@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strconv"
 )
 
 var (
@@ -14,7 +15,7 @@ var (
 func main() {
 	flag.Parse()
 
-	cmd := exec.Command("hugo", "server", "-p", string(*port), "--watch", "--disableLiveReload")
+	cmd := exec.Command("hugo", "server", "-p", strconv.Itoa(*port), "--watch", "--disableLiveReload")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
