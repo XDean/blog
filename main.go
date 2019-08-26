@@ -14,7 +14,7 @@ import (
 var (
 	port        = flag.Int("port", 11074, "Port")
 	commandPort = flag.Int("commandPort", 11075, "Command Port")
-	baseUrl     = flag.String("baseUrl", "http://blog.xdean.com/", "Base URL")
+	baseUrl     = flag.String("baseUrl", "http://blog.xdean.cn/", "Base URL")
 	appendPort  = flag.Bool("appendPort", true, "Append port to base url")
 	extra       = flag.String("extra", "", "Extra hugo Param")
 	key         = flag.String("key", "", "Key for admin command")
