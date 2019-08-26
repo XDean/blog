@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -21,9 +22,10 @@ func main() {
 	cmd := exec.Command("hugo", "server",
 		"-p", strconv.Itoa(*port),
 		"--watch", "--disableLiveReload",
-		"--append-port", strconv.FormatBool(*appendPort),
+		"--appendPort", strconv.FormatBool(*appendPort),
 		"--baseURL", *baseUrl,
 		*extra)
+	fmt.Println(cmd)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
