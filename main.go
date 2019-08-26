@@ -9,13 +9,17 @@ import (
 )
 
 var (
-	port = flag.Int("port", 1313, "Port")
+	port    = flag.Int("port", 1313, "Port")
+	baseUrl = flag.String("baseUrl", "http://blog.xdean.com/", "Base URL")
 )
 
 func main() {
 	flag.Parse()
 
-	cmd := exec.Command("hugo", "server", "-p", strconv.Itoa(*port), "--watch", "--disableLiveReload")
+	cmd := exec.Command("hugo", "server",
+		"-p", strconv.Itoa(*port),
+		"--watch", "--disableLiveReload",
+		"--baseURL", *baseUrl)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
