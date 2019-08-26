@@ -1,5 +1,5 @@
 ---
-title: "Lambda表达式(3) - 建议用法和示例"
+title: "Lambda表达式(3) - 建议用法与示例"
 date: 2018-07-12
 tags: 
   - "Knowledge-Sharing"
