@@ -22,10 +22,10 @@ func main() {
 	cmd := exec.Command("hugo", "server",
 		"-p", strconv.Itoa(*port),
 		"--watch", "--disableLiveReload",
-		"--appendPort", strconv.FormatBool(*appendPort),
+		"--appendPort="+strconv.FormatBool(*appendPort),
 		"--baseURL", *baseUrl,
 		*extra)
-	fmt.Println(cmd)
+	fmt.Println(cmd.Args)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
