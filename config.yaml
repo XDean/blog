@@ -18,6 +18,9 @@ params:
     issueTerm: "url"
     theme: "github-light"
   busuanzi: true
+  cc:
+    name: "CC BY-SA 4.0"
+    link: "https://creativecommons.org/licenses/by-sa/4.0/deed.zh"
 menu:
   main:
     - identifier: "archives"
