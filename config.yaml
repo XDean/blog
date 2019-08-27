@@ -17,6 +17,7 @@ params:
     repo: "XDean/blog-comment"
     issueTerm: "url"
     theme: "github-light"
+  busuanzi: true
 menu:
   main:
     - identifier: "archives"
