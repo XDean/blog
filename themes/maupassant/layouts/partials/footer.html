@@ -50,6 +50,42 @@
         })();
     </script>
 
+    <!-- latex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.css"
+          integrity="sha384-IfEbO0yhy2n4/+OZc9LUjnq7UDEUifPgfe34YcKod1rOJyX0JNBJ4/6XKpclZtj3" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.js"
+            integrity="sha384-07m3BXnpyYn3KtPIt7XjRYaNz2mc2OKdnUmRGNQxx7cMbT78d1JTy71cyEiCBQHr"
+            crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js"
+            integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        const katexOption = {}
+        document.addEventListener("DOMContentLoaded", function () {
+            (function () {
+                Array.prototype.forEach.call(document.querySelectorAll("code"), function (code) {
+                    let txt = code.innerText;
+                    if (txt.startsWith("$") && txt.endsWith("$")) {
+                        const texHtml = katex.renderToString(txt.substring(1, txt.length - 1), katexOption);
+                        const span = document.createElement("span");
+                        span.innerHTML = texHtml;
+                        code.parentNode.replaceChild(span, code)
+                    }
+                });
+            })();
+            Array.prototype.forEach.call(document.querySelectorAll("code[class=language-latex]"), function (code) {
+                let txt = code.innerText;
+                const texHtml = katex.renderToString(txt, {
+                    ...katexOption,
+                    displayMode: true
+                });
+                const span = document.createElement("span");
+                span.innerHTML = texHtml;
+                code.parentNode.parentNode.replaceChild(span, code.parentNode)
+            });
+        })
+    </script>
+
     <!-- graphviz -->
     {{- if and (or .Params.graphviz.enable (and .Site.Params.graphviz.enable (ne .Params.graphviz.enable false))) (or .IsPage .IsHome) -}}
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/viz.js/1.7.1/viz.js"></script>
@@ -75,48 +111,6 @@
                     container.setAttribute("style", "overFlow-x:auto");
                     container.appendChild(image.documentElement);
                     rootElement.parentNode.replaceChild(container, rootElement);
-                });
-            })();
-        </script>
-    {{- end -}}
-
-    <!-- flowchart -->
-    {{- if and (or .Params.flowchartDiagrams.enable (and .Site.Params.flowchartDiagrams.enable (ne .Params.flowchartDiagrams.enable false))) (or .IsPage .IsHome) -}}
-        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.2.8/raphael.min.js" crossorigin="anonymous"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/flowchart/1.12.2/flowchart.min.js"
-                crossorigin="anonymous"></script>
-        <script>
-            {{- if .Params.flowchartDiagrams.options -}}
-            window.flowchartDiagramsOptions = {{ .Params.flowchartDiagrams.options | safeJS }};
-            {{- else if .Site.Params.flowchartDiagrams.options -}}
-            window.flowchartDiagramsOptions = {{ .Site.Params.flowchartDiagrams.options | safeJS }};
-            {{- end -}}
-            (function () {
-                if (!window.flowchart) return;
-                const blocks = document.querySelectorAll('pre code.language-flowchart, pre code.language-flow');
-                for (let i = 0; i < blocks.length; i++) {
-                    const block = blocks[i];
-                    const rootElement = block.parentNode;
-                    const container = document.createElement('div');
-                    const id = `js-flowchart-diagrams-${i}`;
-                    container.id = id;
-                    container.className = 'align-center';
-                    container.setAttribute("style", "overFlow-x:auto");
-                    rootElement.parentNode.replaceChild(container, rootElement);
-                    const diagram = flowchart.parse(block.childNodes[0].nodeValue);
-                    diagram.drawSVG(id, window.flowchartDiagramsOptions ? window.flowchartDiagramsOptions : {});
-                }
-            })();
-        </script>
-    {{- end -}}
-
-    <!-- line-highlight -->
-    {{- if and (or .Params.graphviz.enable (and .Site.Params.graphviz.enable (ne .Params.graphviz.enable false))) (or .IsPage .IsHome) -}}
-        <script type="text/javascript">
-            (function () {
-                Array.prototype.forEach.call(document.querySelectorAll("pre[class=line-numbers]"), function (block) {
-                    const rootElement = block.parentNode;
-
                 });
             })();
         </script>
@@ -154,17 +148,8 @@
                 pre.setAttribute("data-line", highlight)
             });
         }());
-
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-            }
-        };
     </script>
     <script type="text/javascript" src="{{ "js/prism.js" | relURL}}" async="true"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML'
-            async></script>
 {{ end }}
 
 <a id="rocket" href="#top"></a>
