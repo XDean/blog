@@ -43,9 +43,9 @@ categories:
 
 6年后，加拿大心理学家Donald Hebb提出了赫布学习方法来调整神经元之间的关联。他认为两个神经元若总是同时被激发，则其中之一会促进另一个的激发，类似于生物条件反射的形成。其调整方法如下
 
-$$
+```latex
 \Delta\omega_{ij}=\eta\cdot a_i\cdot o_j
-$$
+```
 
 即 参数变化 = 学习效率 x 输出神经元输入值 x 输入神经元输出值。赫布学习方法即是最早的神经网络训练方法。
 
@@ -81,19 +81,19 @@ $$
 
 “反向传播”全称应该叫做“误差反向传播”。
 
-先让我们去掉“反向”，来看一看误差传播。这是概率论与数理统计中的概念，设有函数$y=f(x)$，对于存在误差的输入$x'=x+\Delta x$，一定会得到存在误差的输出$y'=y+\Delta y$，这就是误差传播，易知当$\Delta x$足够小，$x$对$y$的误差传播系数为$\frac{dy}{dx}$。
+先让我们去掉“反向”，来看一看误差传播。这是概率论与数理统计中的概念，设有函数`$y=f(x)$`，对于存在误差的输入`$x'=x+\Delta x$`，一定会得到存在误差的输出`$y'=y+\Delta y$`，这就是误差传播，易知当`$\Delta x$`足够小，`$x$`对`$y$`的误差传播系数为`$\frac{dy}{dx}$`。
 
-那么回到我们的问题上，现在我们有$y=f_{\hat{\omega}}(x)$，其中$\hat{\omega}$为估计参数，有样本集$T$，求最佳参数$\omega*$。
+那么回到我们的问题上，现在我们有`$y=f_{\hat{\omega}}(x)$`，其中`$\hat{\omega}$`为估计参数，有样本集`$T$`，求最佳参数`$\omega*$`。
 
-现在的问题是我们不知道$\hat{\omega}$的误差，而样本集中又是精确值，这时我们不妨把$f$看作是以每一个样本的$x$为参数，以$\hat\omega$为输入的函数，即$y=f_{x_i}(\omega)$。对于输入$\omega *$有误差$\Delta \omega = \hat\omega - \omega *$，导致了输出误差$\Delta y = \hat{y} - y_i$。而此时$\Delta y$是已知的，我们可以由此求得$\Delta \omega \approx \Delta y \frac{dx}{dy}$。这便完成了从输出到输入的误差估计，即反向误差传播。
+现在的问题是我们不知道`$\hat{\omega}$`的误差，而样本集中又是精确值，这时我们不妨把`$f$`看作是以每一个样本的`$x$`为参数，以`$\hat\omega$`为输入的函数，即`$y=f_{x_i}(\omega)$`。对于输入`$\omega *$`有误差`$\Delta \omega = \hat\omega - \omega *$`，导致了输出误差`$\Delta y = \hat{y} - y_i$`。而此时`$\Delta y$`是已知的，我们可以由此求得`$\Delta \omega \approx \Delta y \frac{dx}{dy}$`。这便完成了从输出到输入的误差估计，即反向误差传播。
 
 ## Gradient Descent 梯度下降
 
 上一节我们演绎了一输入一输出的简单形式，但是显然我们不能满足于此，因为大部分的过程(例如我们将要应用到的神经网络)显然是多输入多输出的
 
-$$
+```latex
 Y=F_{\Omega}(X),\quad \text{其中}\Omega,X,Y\text{都是向量}
-$$
+```
 
 那么我们就有两个问题
 
@@ -102,63 +102,63 @@ $$
 
 为了解决它们，我们需要引入一个误差函数(Loss Function)将误差从向量转为标量，并引入一个最优化方法来进行参数修正。
 
-本文我们采用最常用的方式，误差函数取平方损失$E=\sum_i \Delta_{y_i}^2$，最优化方法采用梯度下降法。
+本文我们采用最常用的方式，误差函数取平方损失`$E=\sum_i \Delta_{y_i}^2$`，最优化方法采用梯度下降法。
 
 梯度是导数在动员空间中的拓展。正如向量表示了一元函数的斜率，梯度表示了多元函数的最大增长方向，其模表示了增长速度。
 
-$$
+```latex
 \nabla F = (\frac{\partial F}{\partial x_1},\frac{\partial F}{\partial x_2},\cdots, \frac{\partial F}{\partial x_n})^T
-$$
+```
 
 梯度下降法即是通过向梯度反方向移动来迭代寻找局部极小值。
 
-$$
+```latex
 X_{n+1}=X_n-\eta_n \nabla F(X_n)
-$$
+```
 
-其中$\eta_n$为每次下降的步长，当其足够小时有$F(X_n)>=F(X_{n+1})$。通过不断迭代便可以逐步接近局部极小值。
+其中`$\eta_n$`为每次下降的步长，当其足够小时有`$F(X_n)>=F(X_{n+1})$`。通过不断迭代便可以逐步接近局部极小值。
 
 ![gradient-descent.png](../gradient-descent.png)
 
 
 ## 神经网络中反向传播算法的完整演绎
 
-有神经网络模型$M$，有$L+1$层神经元，其中第$0$层为输入层，第$L$层为输出层，第$l$层神经元有$n_l$个节点。
+有神经网络模型`$M$`，有`$L+1$`层神经元，其中第`$0$`层为输入层，第`$L$`层为输出层，第`$l$`层神经元有`$n_l$`个节点。
 
-记第$l$层输人值为$NET_l$，其第$i$个节点输入值为$net_{l,i}$。
+记第`$l$`层输人值为`$NET_l$`，其第`$i$`个节点输入值为`$net_{l,i}$`。
 
-记第$l$层输出值为$A_l$，其第$i$个节点输出值为$a_{l,i}$。
+记第`$l$`层输出值为`$A_l$`，其第`$i$`个节点输出值为`$a_{l,i}$`。
 
-记从第$l-1$层到$l$层的权重矩阵为$\Omega_l$
+记从第`$l-1$`层到`$l$`层的权重矩阵为`$\Omega_l$`
 
-记从$a_{l-1,i}$到$a_{l,j}$的权重系数为$\omega_{l,i,j}$
+记从`$a_{l-1,i}$`到`$a_{l,j}$`的权重系数为`$\omega_{l,i,j}$`
 
 取用激活函数
 
-$$
+```latex
 Sigmoid(x)=\frac{1}{1+e^{-x}}
-$$
+```
 
 平方误差函数
 
-$$
-E=\sum_i \Delta_{a_{L,i}}^2/2
-$$
+```latex
+E=\sum_i\Delta_{a_{L,i}}^2/2
+```
 
 现有一样本数据
 
-$$
+```latex
 \begin{aligned}
 \text{输入} & A_0 = (a_{0,0}, a_{0,1}, \cdots , a_{0,n_0})^T \\\\
 \text{输出} & T = (t_0,t_1,\cdots,t_{n_L})^T 
 \end{aligned}
-$$
+```
 
 用反向传播+梯度下降进行参数调整。
 
 **正向传播**
 
-$$
+```latex
 \begin{aligned}
 A_0 &= (a_{0,0}, a_{0,1}, \cdots , a_{0,n_0})^T \\\\
 A_l &= (a_{l,0}, a_{l,1}, \cdots , a_{l,n_l})^T \\\\
@@ -167,17 +167,17 @@ A_l &= (a_{l,0}, a_{l,1}, \cdots , a_{l,n_l})^T \\\\
 a_{l,i} &= Sigmoid(net_{l,i}) \\\\
 &= Sigmoid(\sum_{k=0}^{n_{l-1}}\omega_{l,k,i} + b_l) \\\\
 \end{aligned}
-$$
+```
 
 **计算误差**
 
-$$
+```latex
 E = \sum_{k=0}^{n_L}(a_{L,k}-t_k)^2 / 2
-$$
+```
 
 **计算梯度**
 
-$$
+```latex
 \begin{aligned}
 \Delta_{l,i,j}=\frac{\partial E}{\partial \omega_{l,i,j}} &= \frac{\partial E}{\partial a_{l,j}} \frac{\partial a_{l,j}}{\partial net_{l,j}} \frac{\partial net_{l,j}}{\partial \omega_{l,i,j}} \\\\
 &= \frac{\partial E}{\partial a_{l,j}} \frac{\partial Sigmoid(a_{l,j})}{\partial a_{l,j}} a_{l-1,i} \\\\
@@ -189,11 +189,11 @@ $$
 &= \sum_{k=0}^{n_{l+1}}\frac{\partial E}{\partial net_{l+1,k}}\frac{\partial net_{l+1,k}}{\partial a_{l,j}} \\\\
 &= \sum_{k=0}^{n_{l+1}}\frac{\partial E}{\partial net_{l+1,k}}\omega_{l+1,j,k} \\\\
 \end{aligned}
-$$
+```
 
 **反向传播**
 
-$$
+```latex
 \begin{aligned}
 {\rm Let} \quad  \Delta_{l,i,j}&=\delta_{l,j}a_{l-1,i} \\\\
 \delta_{l,j}&=\begin{cases}
@@ -202,7 +202,7 @@ $$
 \end{cases} \\\\
 \omega_{l,i,j}* &= \omega_{l,i,j} - \eta \Delta_{l,i,j}
 \end{aligned}
-$$
+```
 
 *~从这里也能看出“反向”，因为必须要先求后一层误差才能求前一层误差*
 
