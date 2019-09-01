@@ -3,10 +3,10 @@ title: "了解遗传算法 + Go语言实现"
 date: 2019-07-15
 tags: 
   - "Knowledge-Sharing"
-  - "ga"
+  - "GA"
 categories:
-  - "coding"
-  - "machine-learning"
+  - "Coding"
+  - "Machine Learning"
 ---
 
 ```iframe

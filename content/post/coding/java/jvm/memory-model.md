@@ -5,8 +5,8 @@ tags:
   - "Knowledge-Sharing"
   - "Memory-Model"
 categories:
-  - "coding"
-  - "java"
+  - "Coding"
+  - "Java"
 ---
 
 # 理解Java内存模型

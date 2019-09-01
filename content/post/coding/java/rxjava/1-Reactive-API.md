@@ -6,8 +6,8 @@ tags:
   - "Knowledge-Sharing"
   - "RxJava"
 categories:
-  - "coding"
-  - "java"
+  - "Coding"
+  - "Java"
 ---
 
 # Reactive Stream API

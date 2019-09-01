@@ -5,8 +5,8 @@ tags:
   - "Knowledge-Sharing"
   - "Lambda"
 categories:
-  - "coding"
-  - "java"
+  - "Coding"
+  - "Java"
 ---
 
 # Lambda VS Anonymous

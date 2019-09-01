@@ -5,8 +5,8 @@ source: "https://github.com/XDean/Share/blob/master/doc/database/database-normal
 tags: 
   - "Knowledge-Sharing"
 categories:
-  - "coding"
-  - "database"
+  - "Coding"
+  - "Database"
 ---
 
 # Database Normalize

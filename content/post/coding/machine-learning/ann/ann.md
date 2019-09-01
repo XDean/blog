@@ -3,10 +3,10 @@ title: "了解经典人工神经网络 + Go语言实现"
 date: 2019-07-02
 tags: 
   - "Knowledge-Sharing"
-  - "ann"
+  - "ANN"
 categories:
-  - "coding"
-  - "machine-learning"
+  - "Coding"
+  - "Machine Learning"
 ---
 
 # Artificial Neural Network: Gradient Descent and Back Propagation
