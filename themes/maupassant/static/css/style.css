@@ -1198,15 +1198,7 @@ img.alignright {
 
 /* table*/
 table {
-    margin: auto auto 15px;
-    width: 100%;
-    background: transparent;
-    border-collapse: collapse;
-    border-spacing: 0;
-    text-align: left;
-}
-
-table {
+    display: block;;
     margin: auto auto 15px;
     width: 100%;
     background: transparent;
