@@ -16,7 +16,7 @@
     <!-- iframe -->
     <script type="text/javascript">
         (function () {
-            Array.prototype.forEach.call(document.getElementsByClassName("language-iframe"), function (block) {
+            Array.prototype.forEach.call(document.querySelectorAll("code[class=language-iframe]"), function (block) {
                 const rootElement = block.parentNode;
                 const container = document.createElement('div');
                 container.className = 'align-center';
@@ -30,12 +30,12 @@
                 const button = document.createElement('button');
                 button.innerText = "全屏";
                 button.className = "post-iframe-button";
-                button.onclick = function(){
-                    if (isFullScreen){
+                button.onclick = function () {
+                    if (isFullScreen) {
                         button.innerText = "全屏";
                         iframe.classList.remove("fullScreen");
                         button.classList.remove("fullScreen");
-                    } else{
+                    } else {
                         button.innerText = "取消全屏";
                         iframe.classList.add("fullScreen");
                         button.classList.add("fullScreen");
@@ -110,40 +110,14 @@
         </script>
     {{- end -}}
 
-    <!-- sequence必须要在flow加载之后，否则sequence渲染不成功，原因待分析 -->
-    <!-- js-sequence-diagrams -->
-    {{- if and (or .Params.sequenceDiagrams.enable (and .Site.Params.sequenceDiagrams.enable (ne .Params.sequenceDiagrams.enable false))) (or .IsPage .IsHome) -}}
-        <script src="//cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js" crossorigin="anonymous"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/snap.svg/0.5.1/snap.svg-min.js" crossorigin="anonymous"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"
-                crossorigin="anonymous"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"
-                crossorigin="anonymous"></script>
-        <script>
-            {{- if .Params.sequenceDiagrams.options -}}
-            window.sequenceDiagramsOptions = {{ .Params.sequenceDiagrams.options | safeJS }};
-            {{- else if .Site.Params.sequenceDiagrams.options -}}
-            window.sequenceDiagramsOptions = {{ .Site.Params.sequenceDiagrams.options | safeJS }};
-            {{- end -}}
+    <!-- line-highlight -->
+    {{- if and (or .Params.graphviz.enable (and .Site.Params.graphviz.enable (ne .Params.graphviz.enable false))) (or .IsPage .IsHome) -}}
+        <script type="text/javascript">
             (function () {
-                if (!window.Diagram) return;
-                const blocks = document.querySelectorAll('pre code.language-sequence');
-                for (let i = 0; i < blocks.length; i++) {
-                    const block = blocks[i];
-                    // const rootElement = window.Prism.plugins.lineNumbers ? (window.Prism.plugins.toolbar ? block.parentElement.parentElement : block.parentElement) : block;
+                Array.prototype.forEach.call(document.querySelectorAll("pre[class=line-numbers]"), function (block) {
                     const rootElement = block.parentNode;
-                    const container = document.createElement('div');
-                    const id = `js-sequence-diag-${i}`;
-                    container.id = id;
-                    container.className = 'align-center';
-                    container.setAttribute("style", "overFlow-x:auto");
-                    rootElement.parentNode.replaceChild(container, rootElement);
 
-                    const diagram = Diagram.parse(block.childNodes[0].nodeValue);
-                    diagram.drawSVG(id, window.sequenceDiagramsOptions
-                        ? window.sequenceDiagramsOptions
-                        : {theme: 'simple'});
-                }
+                });
             })();
         </script>
     {{- end -}}
@@ -151,7 +125,34 @@
     <script type="text/javascript">
         //添加行号
         (function () {
-            $("pre code").parent().addClass("line-numbers")
+            $("pre code").parent().addClass("line-numbers");
+
+            // highlight
+            Array.prototype.forEach.call(document.querySelectorAll("code[class^=language-]"), function (code) {
+                const pre = code.parentNode;
+                pre.classList.add("line-numbers");
+
+                let highlight = "";
+                let newTxt = code.innerHTML.split('\n').map(function (v, i) {
+                    if (v.endsWith("//HL")) {
+                        highlight = highlight + (i + 1) + ",";
+                        return v.substring(0, v.length - 4);
+                    } else if (v.endsWith("//HS")) {
+                        highlight = highlight + (i + 1);
+                        return v.substring(0, v.length - 4);
+                    } else if (v.endsWith("//HE")) {
+                        highlight = highlight + "-" + (i + 1) + ",";
+                        return v.substring(0, v.length - 4);
+                    } else {
+                        return v;
+                    }
+                }).reduce(function (a, b) {
+                    return a + '\n' + b
+                });
+                code.innerHTML = newTxt;
+                highlight = highlight.substring(0, highlight.length - 1);
+                pre.setAttribute("data-line", highlight)
+            });
         }());
 
         window.MathJax = {
