@@ -148,7 +148,15 @@
                         {{ end }}
                         {{with .Params.Src}}
                             <div class="post-meta">
-                                |<u><a href="{{.}}">本文相关源码</a></u>
+                                |
+                                <div class="dropdown">
+                                    <button class="dropbtn"><u>本文相关源码</u></button>
+                                    <div class="dropdown-content">
+                                        {{range $e := .}}
+                                            <a href="{{$e.url}}" target="_blank">{{or $e.text "源码"}}</a>
+                                        {{end}}
+                                    </div>
+                                </div>
                             </div>
                         {{end}}
                         {{ if .Params.toc }}
