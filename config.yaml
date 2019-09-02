@@ -33,3 +33,4 @@ menu:
       weight: 3
 preserveTaxonomyNames: true
 disablePathToLower: true
+googleAnalytics: "UA-145930182-1"
