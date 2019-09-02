@@ -20,7 +20,7 @@ var (
 	key         = flag.String("key", "", "Key for admin command")
 
 	waitGroup = sync.WaitGroup{}
-	exit      = make(chan int)
+	adminExit = make(chan int)
 )
 
 func main() {
@@ -44,9 +44,21 @@ func hugo() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	log.Print("Hugo process start: ", cmd.Start())
-	<-exit
-	fmt.Println("To kill hugo process")
-	log.Print(cmd.Process.Kill())
+
+	hugoExit := make(chan error)
+
+	go func(cmd *exec.Cmd) {
+		err := cmd.Wait()
+		hugoExit <- err
+	}(cmd)
+
+	select {
+	case <-adminExit:
+		fmt.Println("To kill hugo process")
+		log.Print(cmd.Process.Kill())
+	case err := <-hugoExit:
+		fmt.Println("Hugo exit with:", err.Error())
+	}
 }
 
 func command() {
@@ -72,7 +84,7 @@ func command() {
 	http.HandleFunc("/admin/exit", func(writer http.ResponseWriter, request *http.Request) {
 		if matchKey(request) {
 			fmt.Println("To Exit")
-			defer func() { exit <- 0 }()
+			defer func() { adminExit <- 0 }()
 			writer.WriteHeader(http.StatusOK)
 			_, _ = writer.Write([]byte("Exit"))
 		} else {
