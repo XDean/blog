@@ -468,9 +468,10 @@ textarea {
 
 .post-content ul {
     overflow: auto;
-    padding: .5em 2.4em;
+    /*padding: .5em 2.4em;*/
     border-radius: 3px;
-    margin: 1.8em 0;
+    /*margin: 1.8em 0;*/
+    padding-block-start: 0;
 }
 
 .post-content ul li {
