@@ -15,39 +15,39 @@
 {{ if .IsPage }}
     <!-- iframe -->
     <script type="text/javascript">
-        (function () {
-            Array.prototype.forEach.call(document.querySelectorAll("code[class=language-iframe]"), function (block) {
-                const rootElement = block.parentNode;
-                const container = document.createElement('div');
-                container.className = 'align-center';
-                container.setAttribute("style", "overFlow-x:auto");
+      (function () {
+        Array.prototype.forEach.call(document.querySelectorAll("code[class=language-iframe]"), function (block) {
+          const rootElement = block.parentNode;
+          const container = document.createElement('div');
+          container.className = 'align-center';
+          container.setAttribute("style", "overFlow-x:auto");
 
-                const iframe = document.createElement('iframe');
-                iframe.setAttribute("src", block.innerText);
-                iframe.className = "post-iframe";
+          const iframe = document.createElement('iframe');
+          iframe.setAttribute("src", block.innerText);
+          iframe.className = "post-iframe";
 
-                let isFullScreen = false;
-                const button = document.createElement('button');
-                button.innerText = "全屏";
-                button.className = "post-iframe-button";
-                button.onclick = function () {
-                    if (isFullScreen) {
-                        button.innerText = "全屏";
-                        iframe.classList.remove("fullScreen");
-                        button.classList.remove("fullScreen");
-                    } else {
-                        button.innerText = "取消全屏";
-                        iframe.classList.add("fullScreen");
-                        button.classList.add("fullScreen");
-                    }
-                    isFullScreen = !isFullScreen;
-                };
+          let isFullScreen = false;
+          const button = document.createElement('button');
+          button.innerText = "全屏";
+          button.className = "post-iframe-button";
+          button.onclick = function () {
+            if (isFullScreen) {
+              button.innerText = "全屏";
+              iframe.classList.remove("fullScreen");
+              button.classList.remove("fullScreen");
+            } else {
+              button.innerText = "取消全屏";
+              iframe.classList.add("fullScreen");
+              button.classList.add("fullScreen");
+            }
+            isFullScreen = !isFullScreen;
+          };
 
-                container.appendChild(iframe);
-                container.appendChild(button);
-                rootElement.parentNode.replaceChild(container, rootElement);
-            });
-        })();
+          container.appendChild(iframe);
+          container.appendChild(button);
+          rootElement.parentNode.replaceChild(container, rootElement);
+        });
+      })();
     </script>
 
     <!-- latex -->
@@ -60,94 +60,96 @@
             integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
             crossorigin="anonymous"></script>
     <script type="text/javascript">
-        const katexOption = {}
-        document.addEventListener("DOMContentLoaded", function () {
-            (function () {
-                Array.prototype.forEach.call(document.querySelectorAll("code"), function (code) {
-                    let txt = code.innerText;
-                    if (txt.startsWith("$") && txt.endsWith("$")) {
-                        const texHtml = katex.renderToString(txt.substring(1, txt.length - 1), katexOption);
-                        const span = document.createElement("span");
-                        span.innerHTML = texHtml;
-                        code.parentNode.replaceChild(span, code)
-                    }
-                });
-            })();
-            Array.prototype.forEach.call(document.querySelectorAll("code[class=language-latex]"), function (code) {
-                let txt = code.innerText;
-                const texHtml = katex.renderToString(txt, {
-                    ...katexOption,
-                    displayMode: true
-                });
-                const span = document.createElement("span");
-                span.innerHTML = texHtml;
-                code.parentNode.parentNode.replaceChild(span, code.parentNode)
-            });
-        })
+      const katexOption = {}
+      document.addEventListener("DOMContentLoaded", function () {
+        (function () {
+          Array.prototype.forEach.call(document.querySelectorAll("code"), function (code) {
+            let txt = code.innerText;
+            if (txt.startsWith("$") && txt.endsWith("$")) {
+              const texHtml = katex.renderToString(txt.substring(1, txt.length - 1), katexOption);
+              const span = document.createElement("span");
+              span.innerHTML = texHtml;
+              code.parentNode.replaceChild(span, code)
+            }
+          });
+        })();
+        Array.prototype.forEach.call(document.querySelectorAll("code[class=language-latex]"), function (code) {
+          let txt = code.innerText;
+          const texHtml = katex.renderToString(txt, {
+            ...katexOption,
+            displayMode: true
+          });
+          const span = document.createElement("span");
+          span.innerHTML = texHtml;
+          code.parentNode.parentNode.replaceChild(span, code.parentNode)
+        });
+      })
     </script>
 
     <!-- graphviz -->
     {{- if and (or .Params.graphviz.enable (and .Site.Params.graphviz.enable (ne .Params.graphviz.enable false))) (or .IsPage .IsHome) -}}
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/viz.js/1.7.1/viz.js"></script>
         <script type="text/javascript">
-            (function () {
-                if (!window.Viz) return;
-                var vizPrefix = "language-viz-";
-                var i = 0;
-                Array.prototype.forEach.call(document.querySelectorAll("code[class^=" + vizPrefix + "]"), function (block) {
-                    var engine;
-                    block.getAttribute("class").split(" ").forEach(function (cls) {
-                        if (cls.startsWith(vizPrefix)) {
-                            engine = cls.substr(vizPrefix.length);
-                        }
-                    });
-                    const rootElement = block.parentNode;
-                    var image = new DOMParser().parseFromString(Viz(block.innerText, {
-                        format: "svg",
-                        engine: engine
-                    }), "image/svg+xml");
-                    const container = document.createElement('div');
-                    container.className = 'align-center';
-                    container.setAttribute("style", "overFlow-x:auto");
-                    container.appendChild(image.documentElement);
-                    rootElement.parentNode.replaceChild(container, rootElement);
-                });
-            })();
+          (function () {
+            if (!window.Viz) return;
+            var vizPrefix = "language-viz-";
+            var i = 0;
+            Array.prototype.forEach.call(document.querySelectorAll("code[class^=" + vizPrefix + "]"), function (block) {
+              var engine;
+              block.getAttribute("class").split(" ").forEach(function (cls) {
+                if (cls.startsWith(vizPrefix)) {
+                  engine = cls.substr(vizPrefix.length);
+                }
+              });
+              const rootElement = block.parentNode;
+              var image = new DOMParser().parseFromString(Viz(block.innerText, {
+                format: "svg",
+                engine: engine
+              }), "image/svg+xml");
+              const container = document.createElement('div');
+              container.className = 'align-center';
+              container.setAttribute("style", "overFlow-x:auto");
+              container.appendChild(image.documentElement);
+              rootElement.parentNode.replaceChild(container, rootElement);
+            });
+          })();
         </script>
     {{- end -}}
 
     <script type="text/javascript">
-        //添加行号
-        (function () {
-            $("pre code").parent().addClass("line-numbers");
+      //添加行号
+      (function () {
+        $("pre code").parent().addClass("line-numbers");
 
-            // highlight
-            Array.prototype.forEach.call(document.querySelectorAll("code[class^=language-]"), function (code) {
-                const pre = code.parentNode;
-                pre.classList.add("line-numbers");
+        // highlight
+        Array.prototype.forEach.call(document.querySelectorAll("code[class^=language-]"), function (code) {
+          const pre = code.parentNode;
+          pre.classList.add("line-numbers");
 
-                let highlight = "";
-                let newTxt = code.innerHTML.split('\n').map(function (v, i) {
-                    if (v.endsWith("//HL")) {
-                        highlight = highlight + (i + 1) + ",";
-                        return v.substring(0, v.length - 4);
-                    } else if (v.endsWith("//HS")) {
-                        highlight = highlight + (i + 1);
-                        return v.substring(0, v.length - 4);
-                    } else if (v.endsWith("//HE")) {
-                        highlight = highlight + "-" + (i + 1) + ",";
-                        return v.substring(0, v.length - 4);
-                    } else {
-                        return v;
-                    }
-                }).reduce(function (a, b) {
-                    return a + '\n' + b
-                });
-                code.innerHTML = newTxt;
-                highlight = highlight.substring(0, highlight.length - 1);
-                pre.setAttribute("data-line", highlight)
-            });
-        }());
+          let highlight = "";
+          let newTxt = code.innerHTML.split('\n').map(function (v, i) {
+            if (v.endsWith("//HL")) {
+              highlight = highlight + (i + 1) + ",";
+              return v.substring(0, v.length - 4);
+            } else if (v.endsWith("//HS")) {
+              highlight = highlight + (i + 1);
+              return v.substring(0, v.length - 4);
+            } else if (v.endsWith("//HE")) {
+              highlight = highlight + "-" + (i + 1) + ",";
+              return v.substring(0, v.length - 4);
+            } else {
+              return v;
+            }
+          }).reduce(function (a, b) {
+            return a + '\n' + b
+          });
+          code.innerHTML = newTxt;
+          if (highlight !== "") {
+            highlight = highlight.substring(0, highlight.length - 1);
+            pre.setAttribute("data-line", highlight)
+          }
+        });
+      }());
     </script>
     <script type="text/javascript" src="{{ "js/prism.js" | relURL}}" async="true"></script>
 {{ end }}
