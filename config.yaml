@@ -31,6 +31,19 @@ menu:
       name: "关于"
       url: "/about/"
       weight: 3
+related:
+  threshold: 80
+  includeNewer: true
+  toLower: true
+  indices:
+    - name: title
+      weight: 50
+    - name: categories
+      weight: 50
+    - name: tegs
+      weight: 50
+    - name: date
+      weight: 10
 preserveTaxonomyNames: true
 disablePathToLower: true
 googleAnalytics: "UA-145930182-1"
