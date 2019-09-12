@@ -44,6 +44,5 @@ related:
       weight: 50
     - name: date
       weight: 10
-preserveTaxonomyNames: true
 disablePathToLower: true
 googleAnalytics: "UA-145930182-1"
