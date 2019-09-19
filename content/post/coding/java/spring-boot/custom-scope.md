@@ -9,7 +9,7 @@ categories:
   - "Spring Boot"
 src:
     - text: 'WorldScope'
-      url: https://github.com/XDean/Share/tree/master/src/spring-boot/2/inject/src/main/java/xdean/share/spring/inject/customscope
+      url: https://github.com/XDean/Share/tree/master/src/spring-boot/inject/src/main/java/xdean/share/spring/inject/customscope
 ---
 
 `ConfigurableBeanFactory`提供了接口來进行自定义Scope的注册

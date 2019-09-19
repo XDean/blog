@@ -9,7 +9,7 @@ categories:
   - "Spring Boot"
 src:
     - text: 'WorldScope'
-      url: https://github.com/XDean/Share/tree/master/src/spring-boot/2/inject/src/main/java/xdean/share/spring/inject/customcondition
+      url: https://github.com/XDean/Share/tree/master/src/spring-boot/inject/src/main/java/xdean/share/spring/inject/customcondition
 ---
 
 Spring Boot提供了`Condition`接口来自定义Conditional。它只有一个方法
