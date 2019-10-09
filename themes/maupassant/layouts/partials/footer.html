@@ -15,6 +15,22 @@
 {{ if .IsPage }}
     <!-- iframe -->
     <script type="text/javascript">
+
+      function clickFullScreen(button) {
+        let iframe = button.previousElementSibling;
+        if (iframe != null) {
+          if (button.innerText === "Full Screen") {
+            button.innerText = "Back";
+            iframe.classList.add("fullScreen");
+            button.classList.add("fullScreen");
+          } else {
+            button.innerText = "Full Screen";
+            iframe.classList.remove("fullScreen");
+            button.classList.remove("fullScreen");
+          }
+        }
+      }
+
       (function () {
         Array.prototype.forEach.call(document.querySelectorAll("code[class=language-iframe]"), function (block) {
           const rootElement = block.parentNode;
@@ -30,15 +46,40 @@
           const button = document.createElement('button');
           button.innerText = "全屏";
           button.className = "post-iframe-button";
+          iframe.onfullscreenchange = function (event) {
+            if (document.fullscreenElement === iframe) {
+              button.innerText = "取消全屏";
+              iframe.classList.add("fullScreen");
+              button.classList.add("fullScreen");
+              isFullScreen = true
+            } else {
+              button.innerText = "全屏";
+              iframe.classList.remove("fullScreen");
+              button.classList.remove("fullScreen");
+              isFullScreen = false
+            }
+          };
           button.onclick = function () {
             if (isFullScreen) {
               button.innerText = "全屏";
               iframe.classList.remove("fullScreen");
               button.classList.remove("fullScreen");
+              if (document.exitFullscreen) {
+                document.exitFullscreen()
+              }
             } else {
               button.innerText = "取消全屏";
               iframe.classList.add("fullScreen");
               button.classList.add("fullScreen");
+              if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+              } else if (iframe.mozRequestFullScreen) {
+                iframe.mozRequestFullScreen();
+              } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+              } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+              }
             }
             isFullScreen = !isFullScreen;
           };
