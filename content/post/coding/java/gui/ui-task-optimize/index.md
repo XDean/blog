@@ -9,6 +9,9 @@ categories:
   - "Java"
 graphviz:
   enable: true
+src:
+  - text: FxRunCenter
+    url: https://github.com/XDean/Share/blob/master/src/main/java/xdean/share/gui/schedule/FxRunCenter.java
 ---
 
 一般UI框架都是单线程事件模型。一个典型的UI线程如图
