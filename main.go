@@ -56,8 +56,10 @@ func hugo() {
 	case <-adminExit:
 		fmt.Println("To kill hugo process")
 		log.Print(cmd.Process.Kill())
+		os.Exit(0)
 	case err := <-hugoExit:
 		fmt.Println("Hugo exit with:", err.Error())
+		os.Exit(1)
 	}
 }
 
