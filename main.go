@@ -13,6 +13,7 @@ import (
 
 var (
 	port        = flag.Int("port", 11074, "Port")
+	contentPath = flag.String("content", ".", "hugo content root path")
 	commandPort = flag.Int("commandPort", 11075, "Command Port")
 	baseUrl     = flag.String("baseUrl", "http://blog.xdean.cn/", "Base URL")
 	appendPort  = flag.Bool("appendPort", true, "Append port to base url")
@@ -39,6 +40,7 @@ func hugo() {
 		"--watch", "--disableLiveReload",
 		"--appendPort="+strconv.FormatBool(*appendPort),
 		"--baseURL", *baseUrl,
+		"--source", *contentPath,
 		*extra)
 	fmt.Println(cmd.Args)
 	cmd.Stdout = os.Stdout
