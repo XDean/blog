@@ -70,6 +70,7 @@ func command() {
 		if matchKey(request) {
 			fmt.Println("To pull new code")
 			cmd := exec.Command("git", "pull")
+			cmd.Dir = *contentPath
 			cmd.Stdout = writer
 			cmd.Stderr = writer
 			err := cmd.Run()

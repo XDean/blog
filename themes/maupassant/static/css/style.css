@@ -1326,6 +1326,7 @@ table tr th, table tr td {
     padding: 8px 8px;
     text-decoration: none;
     display: block;
+    white-space: nowrap;
 }
 
 .dropdown-content a:hover {
