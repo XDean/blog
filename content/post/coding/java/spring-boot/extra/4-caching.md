@@ -105,4 +105,122 @@ System.out.println(app.hello("XDean"));
 对于每次缓存调用，都会计算出一个关键值，即`key`，通过这个值来寻找缓存。
 默认情况下，`key`通过所有参数计算(详见`SimpleKeyGenerator`)。
 你也可以通过`key`属性来配置自定义的值。
-`key`的值是一个SpEL表达式，其中可用的参数有
+`key`的值是一个SpEL表达式，上下文将会提供一个名为`root`类型为`CacheExpressionRootObject`的变量。
+
+让我们来尝试使用`key`改变缓存的行为
+
+```java
+@Cacheable(cacheNames = "keyAll")
+public String keyAll(String who, int i) {
+    System.out.println("Calculating KeyAll: " + who + ", " + i);
+    return "Hello " + who;
+}
+
+@Cacheable(cacheNames = "keyWho", key = "#root.args[0]")
+public String keyWho(String who, int i) {
+    System.out.println("Calculating KeyWho: " + who + ", " + i);
+    return "Hello " + who;
+}
+```
+
+我们的函数现在增加了一个参数
+
+- 第一个方法使用默认的`key`，即全部参数
+- 第二个方法只用到了第一个参数`who`
+
+我们来测试一下效果
+
+```java
+System.out.println(app.keyAll("World", 0));
+System.out.println(app.keyAll("World", 1));
+System.out.println(app.keyWho("World", 0));
+System.out.println(app.keyWho("World", 1));
+```
+
+输出结果为
+
+    Calculating KeyAll: World, 0
+    Hello World
+    Calculating KeyAll: World, 1
+    Hello World
+    Calculating KeyWho: World, 0
+    Hello World
+    Hello World
+
+可以看到，指定key的方法只通过第一个参数就命中了缓存
+
+## `@CachePut`
+
+上面展示了如何用`@Cacheable`进行缓存。
+`@CachePut`并不会使用缓存，而仅是将结果置入缓存。
+
+```java
+@CachePut(cacheNames = "put")
+public String put(String who) {
+    System.out.println("Calculating Put: " + who);
+    return "Hello " + who;
+}
+
+@Cacheable(cacheNames = "put")
+public String getPut(String who) {
+    System.out.println("Calculating GetPut: " + who);
+    return "Hello " + who;
+}
+```
+
+上面代码分为两部分，一个`@CachePut`和一个`@Cacheable`。他们使用相同的`cacheNames`和`key`（因为参数相同）。
+让我们来测试以下`@CachePut`的行为。
+
+```java
+System.out.println(app.put("World"));
+System.out.println(app.put("World"));
+System.out.println(app.getPut("World"));
+```
+
+    Calculating Put: World
+    Hello World
+    Calculating Put: World
+    Hello World
+    Hello World
+    
+可以看到，两次调用`put`都进入了方法体，而第一次调用`getPut`就命中了缓存。原因就是`@CachePut`将结果置入了缓存。
+
+## `@CacheEvict`
+
+最后的`@CacheEvict`其实就是`@CachePut`的反面，它负责将缓存删除。
+
+```java
+@CacheEvict(cacheNames = "evict")
+public void evict(String who) {
+    System.out.println("Evict: " + who);
+}
+
+@Cacheable(cacheNames = "evict")
+public String getEvict(String who) {
+    System.out.println("Calculating GetEvict: " + who);
+    return "Hello " + who;
+}
+```
+
+测试代码:
+
+```java
+System.out.println(app.getEvict("World"));
+System.out.println(app.getEvict("World"));
+app.evict("World");
+System.out.println(app.getEvict("World"));
+```
+
+测试结果
+
+    Calculating GetEvict: World
+    Hello World
+    Hello World
+    Evict: World
+    Calculating GetEvict: World
+    Hello World
+
+缓存正常工作，在`evict`后，缓存被清除了，再一次调用便没有缓存可以命中。
+
+# 进阶用法
+
