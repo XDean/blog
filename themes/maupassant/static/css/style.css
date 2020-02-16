@@ -1224,7 +1224,7 @@ table td {
 }
 
 table tr:nth-child(2n) {
-    background: #f7f8f8;
+    background: #fcfdfd;
 }
 
 table tr {

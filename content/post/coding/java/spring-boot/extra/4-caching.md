@@ -8,10 +8,8 @@ categories:
   - "Java"
   - "Spring Boot"
 src:
-    - text: 'Custom Encrypt'
-      url: https://github.com/XDean/Share/tree/master/src/spring-boot/encrypt/src/main/java/xdean/share/spring/encrypt/custom
-    - text: 'Jasypt Encrypt'
-      url: https://github.com/XDean/Share/tree/master/src/spring-boot/encrypt/src/main/java/xdean/share/spring/encrypt/jasypt
+    - text: 'Caching'
+      url: https://github.com/XDean/Share/tree/master/src/spring-boot/cache
 ---
 
 # 什么是缓存
