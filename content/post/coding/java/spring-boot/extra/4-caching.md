@@ -222,5 +222,50 @@ System.out.println(app.getEvict("World"));
 
 缓存正常工作，在`evict`后，缓存被清除了，再一次调用便没有缓存可以命中。
 
-# 进阶用法
+## 其他缓存参数
 
+前面只讲到最主要的`cacheNames`和`key`，缓存注解还有很多其他参数。
+
+| 参数 | 类型 | 用法 |
+|  ---- | ---- | ---- |
+| `keyGenerator` | `String`(BeanName) | 指定`KeyGenerator`用以生成缓存的键值，与`key`互斥 |
+| `cacheManager`| `String`(BeanName) | 指定`CacheManager`，`cacheResolver`互斥 |
+| `cacheResolver` | `String`(BeanName) | 指定`CacheResolver` |
+| `condition` | `String`(SpEL) | 当结果为`true`时才会触发缓存行为，可用的上下文变量同`key` |
+| `unless` | `String`(SpEL) | 当结果为`true`时阻止缓存行为，该表达式在方法执行结束时调用，所以上下文还有额外的变量`#result`指向了返回值 |
+| `sync` | `boolean` | 是否同步调用缓存，该方法只可以是单一的缓存操作，且不能有`unless`。同时需要注意并非所有的缓存实现都支持这一功能 |
+| `CacheEvict.allEntries` | `boolean` | 该操作将删除所有缓存，与`key`互斥 |
+| `CacheEvict.beforeInvocation` | `boolean` | 该清除操作会在方法调用前执行 |
+
+## 与第三方集成
+
+Spring Boot Cache可以与许多第三方框架一键集成。这里我们以Redis为例，更多内容参考[官方文档](https://docs.spring.io/spring-boot/docs/2.1.7.RELEASE/reference/html/boot-features-caching.html#boot-features-caching-provider)
+
+要集成Redis，只需要像平常一样，添加上Redis的依赖
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+```
+
+Spring Boot Cache就会自动切换到Redis。
+默认的Redis地址为本地6379端口，你可以通过配置文件配置。
+
+再次运行我们完整的测试代码，我们可以从Redis中查询到我们的缓存信息
+
+    # keys *
+    evict::World
+    test::World
+    put::World
+    scope2::XDean
+    keyAll::SimpleKey [World,1]
+    scope2::World
+    scope1::World
+    scope1::XDean
+    keyWho::World
+    test::XDean
+    keyAll::SimpleKey [World,0]
+
+如果你的项目配置了Redis，却不想用他来做Cache，可以修改`spring.cache.type`来强制使用指定的缓存实现。
