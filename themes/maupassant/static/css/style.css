@@ -1260,13 +1260,12 @@ table tr th, table tr td {
 }
 
 #TableOfContents ul {
-    padding: 0;
     margin: 0.5em;
     line-height: 1.8em;
+    padding-left: 1em;
 }
 
 #TableOfContents li {
-    list-style-type: none;
 }
 
 .post-iframe {
