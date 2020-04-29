@@ -475,7 +475,7 @@ textarea {
 }
 
 .post-content ul li {
-    text-indent: .5em;
+    /*text-indent: .5em;*/
 }
 
 .archive-title {
