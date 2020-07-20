@@ -145,8 +145,8 @@ blockquote {
     padding-bottom: 5px;
 }
 
-blockquote > p {
-    margin: 0 !important;
+blockquote > p:last-child {
+    margin-bottom: 0;
 }
 
 /**
