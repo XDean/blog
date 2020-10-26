@@ -141,7 +141,7 @@ res.explain
 
 ```
 == Physical Plan ==
-CartesianProduct ((measurementTime#178 > eventTime#162 - interval 30 seconds) && (measurementTime#178 <= eventTime#162)) //HL
+CartesianProduct ((measurementTime#178 > eventTime#162 - interval 30 seconds) && (measurementTime#178 <= eventTime#162)) 
 :- *Project [id#156L AS eid#161L, cast((1474876784 - (10 * id#156L)) as timestamp) AS eventTime#162, UDF() AS eventType#163]
 :  +- *Range (0, 1000000, splits=4)
 +- *Filter isnotnull(measurementTime#178)
@@ -260,7 +260,7 @@ res match {
 ```
 == Physical Plan ==
 *Project [eid#1449L, eventTime#1450, eventType#1451, mid#1469L, measurementTime#1470, value#1471]
-+- *SortMergeJoin [windowStart#1486], [windowStart#1494], Inner, ((measurementTime#1470 > eventTime#1450 - interval 30 seconds) && (measurementTime#1470 <= eventTime#1450)) //HL
++- *SortMergeJoin [windowStart#1486], [windowStart#1494], Inner, ((measurementTime#1470 > eventTime#1450 - interval 30 seconds) && (measurementTime#1470 <= eventTime#1450)) 
    :- *Sort [windowStart#1486 ASC], false, 0
    :  +- Exchange hashpartitioning(windowStart#1486, 200)
    :     +- *Project [eid#1449L, eventTime#1450, eventType#1451, window#1492.start AS windowStart#1486]
