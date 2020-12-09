@@ -1,0 +1,43 @@
+---
+title: "Wits and Wagers (猜来猜趣) 题集"
+date: 2020-12-09
+tags:
+- "Board Game"
+- "Tools"
+---
+
+<div>
+    <p>
+        题目：<span id="question"></span>
+    <p>
+        答案：<span id="answer"></span>
+    <p>
+    <p>
+    <p>
+        <button id="show-answer">显示答案</button>
+    <p>
+        <button id="next">下一题</button>
+        <script>
+            const base = "https://tools.xdean.cn/wits-wagers/qs";
+            const question = document.getElementById("question");
+            const answer = document.getElementById("answer");
+            const answerButton = document.getElementById("show-answer");
+            const nextButton = document.getElementById("next");
+
+            function nextQuestion() {
+                const url = `${base}/general/random`;
+                fetch(url).then(e => e.json()).then(e => {
+                    question.innerText = e["Q"];
+                    answer.innerText = e["A"];
+                    answer.style.display = "none"
+                });
+            }
+
+            nextQuestion();
+
+            answerButton.onclick = () => {
+                answer.style.display = ""
+            };
+            nextButton.onclick = nextQuestion
+        </script>
+</div>
