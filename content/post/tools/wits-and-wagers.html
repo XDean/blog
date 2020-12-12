@@ -8,6 +8,13 @@ tags:
 
 <div>
     <p>
+        <label>
+            系列：
+            <select id="suite" style="min-width: 130px">
+                <option>所有</option>
+            </select>
+        </label>
+    <p>
         题目：<span id="question"></span>
     <p>
         答案：<span id="answer"></span>
@@ -19,13 +26,17 @@ tags:
         <button id="next">下一题</button>
         <script>
             const base = "https://tools.xdean.cn/wits-wagers/qs";
+            const suiteSelect = document.getElementById('suite');
             const question = document.getElementById("question");
             const answer = document.getElementById("answer");
             const answerButton = document.getElementById("show-answer");
             const nextButton = document.getElementById("next");
 
+            let suites = [];
+            let suite = '所有';
+
             function nextQuestion() {
-                const url = `${base}/general/random`;
+                const url = `${base}/${suite === '所有' ? suites[Math.floor(Math.random() * suites.length)] : suite}/random`;
                 fetch(url).then(e => e.json()).then(e => {
                     question.innerText = e["Q"];
                     answer.innerText = e["A"];
@@ -33,11 +44,20 @@ tags:
                 });
             }
 
-            nextQuestion();
+            fetch(base).then(e => e.json()).then(es => {
+                suites = es;
+                es.forEach(e => {
+                    const o = document.createElement('option');
+                    o.innerText = e;
+                    suiteSelect.appendChild(o);
+                });
+                nextQuestion();
+            });
 
             answerButton.onclick = () => {
                 answer.style.display = ""
             };
-            nextButton.onclick = nextQuestion
+            nextButton.onclick = nextQuestion;
+            suiteSelect.onchange = () => suite = suiteSelect.value;
         </script>
 </div>
